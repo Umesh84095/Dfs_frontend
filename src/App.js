@@ -1,25 +1,65 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import axios from "axios";
 
-function App() {
+const App = () => {
+  const [start, setStart] = useState();
+  const [end, setEnd] = useState();
+  const [path, setPath] = useState([]);
+
+  const handlePath = () => {};
+  const handleSubmit=()=>{
+   onclick="document.getElementById('form1').submit();
+  }
+
+
+  //http://localhost:8080/find-path
+  const findPath = async () => {
+    try {
+      const response = await axios.post("http://localhost:8080/find-path", {
+        start,
+        end,
+      });
+      console.log(response);
+      setPath(response?.data);
+    } catch (error) {
+      console.error("bad response");
+    }
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <>
+        <div>
+          Dfs Path Form
+          <form id="form1">
+            <div className="parent-container">
+              <div>
+                <label>startX:</label>
+                <input type="text" />
+              </div>
+              <div>
+                <label>StartY:</label>
+                <input type="text" />
+              </div>
+            </div>
+            <div className="parent-container">
+              <div>
+                <label>EndX:</label>
+                <input type="text" />
+              </div>
+              <div>
+                <label>EndY:</label>
+                <input type="text" />
+              </div>
+            </div>
+            <button type="submit" value="Submit" onclick="handleSubmit">
+              Submit
+            </button>
+          </form>
+        </div>
+      </>
     </div>
   );
-}
+};
 
 export default App;
